@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Elias — Fotografie</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&display=swap" rel="stylesheet" />
+  <link href="https://fonts.bunny.net/css?family=cormorant-garamond:300,300i,400,400i|tenor-sans:400" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -151,30 +151,6 @@
       display: block;
     }
 
-    /* Placeholder when no image */
-    .hero-placeholder {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #e8e0d4 0%, #d4c9b8 100%);
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 1rem;
-      color: var(--warm-gray);
-    }
-
-    .hero-placeholder svg { opacity: 0.4; }
-
-    .hero-placeholder span {
-      font-family: 'Tenor Sans', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
     /* ── DIVIDER ── */
     .divider {
       display: flex;
@@ -227,7 +203,6 @@
       color: var(--warm-gray);
     }
 
-    /* Masonry grid */
     .gallery-grid {
       columns: 3;
       column-gap: 1.2rem;
@@ -278,19 +253,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* Placeholder tiles */
-    .gallery-placeholder {
-      background: linear-gradient(135deg, #e8e0d4, #d4c9b8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--warm-gray);
-    }
-
-    .ph-tall { aspect-ratio: 2/3; }
-    .ph-wide { aspect-ratio: 4/3; }
-    .ph-square { aspect-ratio: 1; }
 
     /* ── LIGHTBOX ── */
     .lightbox {
@@ -412,6 +374,35 @@
       font-style: normal;
     }
 
+    /* ── LEGAL SECTIONS (Impressum & Datenschutz) ── */
+    .legal-section {
+      display: none;
+      padding: 4rem;
+      border-top: 1px solid var(--light-border);
+      background-color: rgba(26, 23, 18, 0.02);
+    }
+    .legal-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    .legal-section h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    .legal-section h3 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .legal-section p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      max-width: 75ch;
+      margin-bottom: 1rem;
+    }
+
     /* ── FOOTER ── */
     footer {
       padding: 2rem 4rem;
@@ -421,13 +412,25 @@
       align-items: center;
     }
 
-    footer p {
+    footer p, footer .footer-links a {
       font-family: 'Tenor Sans', sans-serif;
       font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--warm-gray);
     }
+
+    footer .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    footer .footer-links a {
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    footer .footer-links a:hover { color: var(--ink); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeDown {
@@ -456,13 +459,13 @@
       #about { grid-template-columns: 1fr; padding: 3rem 2rem; gap: 2rem; }
       #kontakt { flex-direction: column; gap: 2rem; padding: 3rem 2rem; text-align: center; }
       .contact-links { align-items: center; }
-      footer { padding: 1.5rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .legal-section { padding: 3rem 2rem; }
+      footer { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header>
     <a class="logo" href="#">Elias</a>
     <nav>
@@ -472,7 +475,6 @@
     </nav>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-text">
       <h1>Das Licht<br>im <em>richtigen</em><br>Moment.</h1>
@@ -480,14 +482,12 @@
       <div class="hero-badge">Verfügbar für Projekte</div>
     </div>
     <div class="hero-image-wrap">
-      <!-- Ersetze dieses div durch: <img class="hero-img" src="images/hero.jpg" alt="Hero"> -->
       <img class="hero-img" src="Fotos/fuji_106_B_WienBahnHolaubekPlatzGoldenHour01.jpg" alt="Hero">
+    </div>
   </section>
 
-  <!-- DIVIDER -->
   <div class="divider"><span>Ausgewählte Arbeiten</span></div>
 
-  <!-- GALLERY -->
   <section id="galerie">
     <div class="gallery-header">
       <h2>Galerie</h2>
@@ -495,75 +495,55 @@
     </div>
 
     <div class="gallery-grid" id="gallery">
-      <!--
-        ════════════════════════════════════════════════
-        SO FÜGST DU BILDER HINZU:
-        1. Erstelle einen Ordner "images" in deinem Repo
-        2. Lade deine Fotos dort hoch
-        3. Ersetze die Platzhalter unten mit:
-
-        <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="images/foto1.jpg" alt="Beschreibung" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Beschreibung</span>
-          </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="Fotos/fuji_107_B_RolltreppeWien_01.jpg" alt="U-Bahn-Station „Rolltreppe in Wien“" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Rolltreppe in Wien</span>
         </div>
-        ════════════════════════════════════════════════
-      -->
-
-
-
-<!-- Hier kommen weitere Bilder rein -->
-
-      <!-- Platzhalter (löschen sobald echte Bilder da sind) -->
-        <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_107_B_RolltreppeWien_01.jpg" alt="U-Bahn-Station „Rolltreppe in Wien"" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Rolltreppe in Wien"</span>
-          </div>
-        </div>
+      </div>
       
-        <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_108_B_InnenhofWienSW01.jpg" alt="Wiener Innenhof" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Wiener Innenhof</span>
-          </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="Fotos/fuji_108_B_InnenhofWienSW01.jpg" alt="Wiener Innenhof" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Wiener Innenhof</span>
         </div>
+      </div>
       
-        <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_108_B_StiegenWien02.jpg" alt="Wiener U-Bahnaufgang" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Wiener U-Bahnaufgang</span>
-          </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="Fotos/fuji_108_B_StiegenWien02.jpg" alt="Wiener U-Bahnaufgang" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Wiener U-Bahnaufgang</span>
         </div>
+      </div>
       
-       <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_107_B_Lampengitter01.jpg" alt="Gitter" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Gitter</span>
-          </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="Fotos/fuji_107_B_Lampengitter01.jpg" alt="Gitter" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Gitter</span>
         </div>
+      </div>
       
-       <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_106_B_brückenMenschWienZerteil04.jpg" alt="Wiener Brücke in Schnipsel" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Wiener Brücke in Schnipsel</span>
-          </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="Fotos/fuji_106_B_brückenMenschWienZerteil04.jpg" alt="Wiener Brücke in Schnipsel" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Wiener Brücke in Schnipsel</span>
         </div>
+      </div>
       
-       <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_106_B_Wienwüstenrot01.jpg" alt="Wiener Gebäude" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Wiener Gebäude</span>
-          </div>
+      <div class="gallery-item" onclick="openLightbox(this)">
+        <img src="Fotos/fuji_106_B_Wienwüstenrot01.jpg" alt="Wiener Gebäude" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Wiener Gebäude</span>
         </div>
+      </div>
 
       <div class="gallery-item" onclick="openLightbox(this)">
-          <img src="Fotos/fuji_108_B_BahnabstiegSW01.jpg" alt="Wiener U-Bahnaufgang" loading="lazy">
-          <div class="gallery-item-overlay">
-            <span class="gallery-item-label">Wiener U-Bahnaufgang</span>
-          </div>
+        <img src="Fotos/fuji_108_B_BahnabstiegSW01.jpg" alt="Wiener U-Bahnaufgang" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Wiener U-Bahnaufgang</span>
         </div>
+      </div>
+
       <div class="gallery-item" onclick="openLightbox(this)">
         <img src="Fotos/fuji_107_B_SpiegelUbahnMenschFormal01.jpg" alt="Spiegelung in U-Bahn mit Person" loading="lazy">
         <div class="gallery-item-overlay">
@@ -647,17 +627,14 @@
           <span class="gallery-item-label">Tennis in Wien</span>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="about-label">Über mich</div>
     <div class="about-text">
       <h3>Fotografieren ist meine Art,<br>die Welt zu verstehen.</h3>
       <p>
-        <!-- Passe diesen Text an dich an! -->
         Ich bin Elias, Hobbyfotograf aus Leidenschaft. Mit meiner Kamera erkunde ich Licht, Schatten
         und die kleinen Momente, die im Alltag oft unbemerkt bleiben. Mein Fokus liegt auf
         Landschaften und Streetfotografie.
@@ -665,26 +642,56 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="kontakt">
     <div class="contact-left">
       <h2>In Kontakt treten</h2>
       <p>Ich freue mich über Nachrichten, Feedback oder Kooperationen.</p>
     </div>
     <div class="contact-links">
-      <!-- Ersetze die Links mit deinen echten Kontaktdaten -->
       <a href="mailto:elias.schwaz08@gmail.com">E-Mail schreiben</a>
       <a href="https://www.instagram.com/eliasschwarz08" target="_blank">Instagram</a>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <section id="impressum-section" class="legal-section">
+    <h2>Impressum</h2>
+    <p><strong>Diensteanbieter und Medieninhaber:</strong><br>
+       Elias Schwarz<br>
+       [Deine Straße / Hausnummer]*<br>
+       [Deine PLZ / Ort]*<br>
+       Österreich</p>
+    <p><strong>Kontakt:</strong><br>
+       E-Mail: elias.schwaz08@gmail.com</p>
+    <p><em>*Hinweis: Als Privatperson mit einer rein hobbymäßigen, nicht-kommerziellen Portfolio-Website besteht laut gängiger Rechtsprechung in der Regel keine strikte Pflicht zur Veröffentlichung der vollständigen Wohnanschrift, solange keine geschäftsmäßigen Interessen verfolgt werden.</em></p>
+  </section>
+
+  <section id="datenschutz-section" class="legal-section">
+    <h2>Datenschutzerklärung</h2>
+    <h3>1. Datenschutz auf einen Blick</h3>
+    <p>Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten auf dieser Website auf. Ich nehme den Schutz Ihrer Daten sehr ernst und behandle Ihre Daten vertraulich.</p>
+    
+    <h3>2. Datenübermittlung und Webhosting</h3>
+    <p>Diese Website wird über <strong>GitHub Pages</strong> (GitHub Inc., 88 Colin P. Kelly Jr. St, San Francisco, CA 94107, USA) gehostet. Beim Aufruf dieser Webseite erhebt GitHub automatisch Server-Logfiles (z.B. IP-Adresse, Browsertyp, Datum/Uhrzeit). Dies ist technisch erforderlich, um die Website stabil und sicher bereitzustellen. GitHub verarbeitet diese Daten auf Basis berechtigter Interessen.</p>
+    
+    <h3>3. Cookies & Tracking</h3>
+    <p>Diese Website ist rein informativ und nutzt **keine Cookies**, keine Analyse-Tools (wie Google Analytics) und kein Tracking-Verhalten.</p>
+    
+    <h3>4. Externe Schriftarten (Fonts)</h3>
+    <p>Zur einheitlichen Darstellung von Schriftarten nutzt diese Seite den datenschutzfreundlichen Dienst <strong>Bunny Fonts</strong> (bereitgestellt von Bunny Way d.o.o.). Dieser lädt Schriftarten komplett ohne das Setzen von Cookies und ohne Protokollierung oder Weiterleitung der IP-Adresse des Besuchers an US-Server (DSGVO-konform).</p>
+    
+    <h3>5. Ihre Rechte</h3>
+    <p>Sie haben das Recht, jederzeit unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Zudem haben Sie ein Recht auf Berichtigung oder Löschung dieser Daten. Wenden Sie sich hierzu einfach per E-Mail an mich.</p>
+  </section>
+
   <footer>
     <p>© 2026 Elias — Fotografie</p>
+    <div class="footer-links">
+      <a onclick="toggleLegal('impressum')">Impressum</a>
+      <a onclick="toggleLegal('datenschutz')">Datenschutz</a>
+    </div>
     <p>Alle Rechte vorbehalten</p>
   </footer>
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()">Schließen</button>
     <img id="lightbox-img" src="" alt="" />
@@ -715,6 +722,22 @@
     const count = imgs.length;
     document.getElementById('photo-count').textContent =
       count > 0 ? `${count} Bild${count !== 1 ? 'er' : ''}` : '— Bilder';
+
+    // Funktion um Impressum / Datenschutz ein- und auszublenden
+    function toggleLegal(type) {
+      const impSection = document.getElementById('impressum-section');
+      const dsSection = document.getElementById('datenschutz-section');
+      
+      if (type === 'impressum') {
+        dsSection.classList.remove('active');
+        impSection.classList.toggle('active');
+        if(impSection.classList.contains('active')) impSection.scrollIntoView({ behavior: 'smooth' });
+      } else if (type === 'datenschutz') {
+        impSection.classList.remove('active');
+        dsSection.classList.toggle('active');
+        if(dsSection.classList.contains('active')) dsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   </script>
 
 </body>
